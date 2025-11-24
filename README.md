@@ -80,7 +80,7 @@ SmartLauncher includes:
 
 Get the latest version under **Releases** on the right side of this page.
 
-Or download it from here: https://drive.google.com/file/d/1YREahYmoZcIvZpAzfuzkE86Ce4brWBx6/view?usp=sharing
+Or download it from here: https://drive.google.com/file/d/1iXAHcfA3Yh1mf8QOFdBrF82YHmcOQ4pF/view?usp=sharing
 
 ---
 
