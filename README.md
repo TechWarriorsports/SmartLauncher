@@ -80,9 +80,8 @@ When SmartLauncher launches an external app, the launcher hides and a floating *
 - Saved position across sessions  
 - A **compact 3×3 grid** of your user tiles (fast mini-launcher)
 
-<img width="1920" height="1080" alt="Schermopname (1167)" src="https://github.com/user-attachments/assets/f6006de0-976b-4492-bbe0-66b5501b94d6" />
-<img width="1920" height="1080" alt="Schermopname (1166)" src="https://github.com/user-attachments/assets/a06afcec-d7e0-464c-b96e-9d4571239939" />
-
+<img width="1920" height="1080" alt="Schermopname (1170)" src="https://github.com/user-attachments/assets/1a4a8683-f081-40ec-af0b-83559a57e3e4" />
+<img width="1920" height="1080" alt="Schermopname (1172)" src="https://github.com/user-attachments/assets/5fb9ea24-8d18-4ff1-8d26-a6d31ab17875" />
 
 ---
 
