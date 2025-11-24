@@ -1,92 +1,137 @@
 # SmartLauncher
+SmartLauncher is a fullscreen Windows launcher designed to replace slow menu navigation with fast, customizable tiles.
 
-SmartLauncher is a fullscreen Windows launcher designed to replace slow menu navigation with fast, customizable tiles.  
+<img width="1920" height="1080" alt="Schermopname (1160)" src="https://github.com/user-attachments/assets/b3639179-36e0-4561-94c5-69db94cd751a" />
+
 It gives instant access to apps, folders, settings and workflows — all from one clean interface.
 
 ---
-<img width="1920" height="1080" alt="Schermopname (1148)" src="https://github.com/user-attachments/assets/6652daa2-0baa-492b-840e-b3fbdf3ee1ae" />
 
 ## 🚀 What is SmartLauncher?
-
-SmartLauncher makes Windows faster to use by giving you a simple tile-based launcher:
+SmartLauncher makes Windows faster by giving you a simple tile-based launcher:
 
 - Open apps instantly  
 - Jump directly to Windows settings  
 - Launch folders or websites  
 - Create your own tiles and workflows  
-- Customize the entire look and feel  
+- Fully customize the UI  
+- Comes with a smart floating “Return” button overlay  
 
-No Start Menu…  
-No searching…  
-No desktop shortcuts…  
+No Start Menu.  
+No searching.  
+No desktop icons.  
 Just click and go.
 
 ---
 
 ## 🎨 Key Features
 
-### **Instant Access**
-- Launch apps, folders, settings and websites  
-- Fullscreen, clean interface  
-- Auto-hide launcher  
-- Smart overlay button stays available while other apps are running  
-
-### **Custom Tiles**
-You can create your own tiles with:
-
-- App launchers  
-- Folder shortcuts  
-- Windows settings  
+### ⚡ Instant Access
+- Apps  
+- Folders  
 - Websites  
+- Windows settings  
 - Commands  
-- Multi-action workflows  
-- Custom icons (emoji or any symbol)
 
-Example tile workflow:
+<img width="1920" height="1080" alt="Schermopname (1162)" src="https://github.com/user-attachments/assets/4043f9f7-a361-4837-a90e-e0d9655be298" />
+
+---
+
+### 🧩 Custom Tiles & Multi-Action Workflows
+Create tiles with one or multiple actions:
+
+- Launch app  
+- Launch installed program  
+- Open folder  
+- Open URL  
+- Execute command  
+- Open Windows setting  
+- Delay (wait seconds)  
+- Run a Fix (experimental)
+
+Example workflow:
 1. Open Spotify  
 2. Wait 2 seconds  
 3. Open Chrome on YouTube  
 4. Open Discord  
 
-All from a single tile.
+<img width="1920" height="1080" alt="Schermopname (1164)" src="https://github.com/user-attachments/assets/b17321ff-6369-4d92-be35-b9adfaf899a1" />
 
-### **Theme System**
+---
+
+### 🎨 Theme System
 SmartLauncher includes:
-- Dark Theme  
-- Light Theme  
-- Fully Custom Theme (colors for tiles, accents, text, borders…)  
+- Dark theme  
+- Light theme  
+- Fully custom theme editor (all colors adjustable)
 
-### **Languages**
+<img width="1920" height="1080" alt="Schermopname (1165)" src="https://github.com/user-attachments/assets/211216f5-44a4-4324-b5f5-3d45443edabc" />
+
+---
+
+## 🔙 Smart Return Button Overlay
+When SmartLauncher launches an external app, the launcher hides and a floating **Return Button Overlay** appears.
+
+**Includes:**
+- Draggable always-on-top overlay  
+- Auto-hide with fade  
+- Smart open direction (up/down depending on screen position)  
+- Expand/Collapse  
+- Saved position across sessions  
+- A **compact 3×3 grid** of your user tiles (fast mini-launcher)
+
+<img width="1920" height="1080" alt="Schermopname (1167)" src="https://github.com/user-attachments/assets/f6006de0-976b-4492-bbe0-66b5501b94d6" />
+<img width="1920" height="1080" alt="Schermopname (1166)" src="https://github.com/user-attachments/assets/a06afcec-d7e0-464c-b96e-9d4571239939" />
+
+
+---
+
+## 🔎 Search System
+Type to instantly find:
+- Global tiles  
+- User tiles  
+- Nested children  
+- Actions indexed by name  
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/87c2e45c-148e-49ef-a0b4-91ac68e373e8" />
+
+---
+
+## 🧪 Fix System (EXPERIMENTAL — NOT FINISHED)
+This feature is **currently in development** and not fully functional.
+
+The Fix System is intended to run PowerShell repair scripts with:
+- Live progress  
+- Step indicators  
+- Realtime logs  
+- Automatic UI lockout during fixes  
+
+**Status:**  
+❌ Not working yet  
+❌ Scripts incomplete  
+❌ UI is functional, backend is not
+
+---
+
+## 🌍 Languages
 - English  
 - Dutch  
 - German  
 
 ---
 
-## 🧪 Public Beta v1.0.0
-
-### **What works**
-- Opening apps  
-- Opening Windows settings  
-- Creating custom tiles  
-- Theme editing  
-- Overlay launcher  
-
-### **Not working yet**
-- Fixes / troubleshooting tools  
-
----
-
 ## 📥 Download
+Download the latest version under **Releases**  
+or use the direct link:
 
-Get the latest version under **Releases** on the right side of this page.
-
-Or download it from here: https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing
+https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing
 
 ---
 
 ## 📝 Notes
+This is a **public beta**.  
+Bugs are normal at this stage.  
+Feedback is welcome.
 
-This is an early public beta.  
-Feedback is welcome — bugs are expected at this stage.
+
 
