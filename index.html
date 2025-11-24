@@ -6,278 +6,81 @@
 <title>SmartLauncher</title>
 
 <style>
-    :root {
-        --bg-dark: #0b0b12;
-        --bg-card-dark: #141421;
-        --purple: #7b3ff3;
-        --purple-light: #9d6efd;
-        --purple-glow: #b58aff;
-        --text-dark: #ffffff;
-        --text-sub-dark: #cccccc;
-
-        --bg-light: #f2f2f7;
-        --bg-card-light: #ffffff;
-        --text-light: #111111;
-        --text-sub-light: #333333;
-    }
-
     body {
         margin: 0;
+        padding: 0;
+        background: #09090f;
         font-family: "Segoe UI", sans-serif;
-        transition: background 0.3s, color 0.3s;
-    }
-
-    /* DARK MODE */
-    body.dark {
-        background: var(--bg-dark);
-        color: var(--text-dark);
-    }
-    body.dark .section {
-        background: var(--bg-card-dark);
-        box-shadow: 0 0 40px rgba(123, 63, 243, 0.15);
-    }
-    body.dark header {
-        background: linear-gradient(145deg, #4b18c7, #7b3ff3);
-        box-shadow: 0 0 60px rgba(123, 63, 243, 0.4);
-    }
-
-    /* LIGHT MODE */
-    body.light {
-        background: var(--bg-light);
-        color: var(--text-light);
-    }
-    body.light .section {
-        background: var(--bg-card-light);
-        box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-    body.light header {
-        background: linear-gradient(145deg, #d7d2ff, #bfa6ff);
-        box-shadow: 0 0 50px rgba(120, 80, 255, 0.2);
-    }
-
-    header {
-        text-align: center;
-        padding: 80px 20px;
-    }
-
-    header h1 {
-        margin: 0;
-        font-size: 60px;
-        font-weight: 900;
-    }
-
-    .controls {
-        position: fixed;
-        top: 20px;
-        right: 20px;
+        color: white;
         display: flex;
-        gap: 12px;
+        justify-content: center;
+        padding-top: 80px;
     }
 
-    .btn {
-        padding: 10px 18px;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.2s;
-        font-size: 15px;
+    .wrap {
+        text-align: center;
+        max-width: 600px;
+        padding: 20px;
     }
 
-    .btn-theme {
-        background: var(--purple);
-        color: white;
-        box-shadow: 0 0 20px rgba(123,63,243,0.4);
-    }
-
-    .btn-theme:hover {
-        transform: scale(1.05);
-    }
-
-    .btn-lang {
-        background: #2b2b2b;
-        color: white;
-    }
-
-    body.light .btn-lang {
-        background: #ddd;
-        color: #111;
-    }
-
-    .section {
-        max-width: 1100px;
-        margin: 60px auto;
-        padding: 40px;
-        border-radius: 20px;
-        transition: 0.3s;
-    }
-
-    h2 {
-        font-size: 30px;
-        color: var(--purple-light);
-        margin-bottom: 10px;
+    h1 {
+        font-size: 55px;
+        font-weight: 900;
+        margin: 0;
+        background: linear-gradient(135deg, #8b5cf6, #6b2bf0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
     }
 
     .download-btn {
-        display: block;
-        width: fit-content;
-        margin: 30px auto 0;
-        padding: 18px 40px;
-        background: var(--purple);
-        font-size: 24px;
-        text-decoration: none;
+        display: inline-block;
+        margin-top: 25px;
+        padding: 16px 45px;
+        background: #6a29f3;
         color: white;
-        border-radius: 14px;
+        font-size: 22px;
+        border-radius: 12px;
         font-weight: bold;
-        box-shadow: 0 0 20px rgba(123,63,243,0.4);
+        text-decoration: none;
+        box-shadow: 0 0 25px rgba(128, 70, 255, 0.6);
         transition: 0.2s;
     }
 
     .download-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 40px rgba(157,110,253,0.6);
+        transform: translateY(-3px);
+        box-shadow: 0 0 45px rgba(144, 88, 255, 0.9);
     }
 
-    .screenshots {
-        display: grid;
-        grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-        gap: 25px;
-        margin-top: 20px;
-    }
-
-    .screenshots img {
-        width: 100%;
-        border-radius: 10px;
-    }
-
-    footer {
-        text-align: center;
-        padding: 20px;
-        opacity: 0.6;
+    .desc {
+        margin-top: 30px;
+        font-size: 19px;
+        opacity: 0.85;
+        line-height: 1.6;
+        background: #12121a;
+        padding: 22px 20px;
+        border-radius: 16px;
+        box-shadow: 0 0 25px rgba(123, 63, 243, 0.25);
     }
 </style>
-
-<script>
-    // theme toggle
-    function toggleTheme() {
-        document.body.classList.toggle("dark");
-        document.body.classList.toggle("light");
-
-        localStorage.setItem("theme",
-            document.body.classList.contains("dark") ? "dark" : "light"
-        );
-    }
-
-    // language switcher
-    function toggleLang() {
-        const lang = document.documentElement.lang === "en" ? "nl" : "en";
-        document.documentElement.lang = lang;
-
-        localStorage.setItem("lang", lang);
-
-        renderText();
-    }
-
-    // TRANSLATIONS
-    const text = {
-        en: {
-            title: "SmartLauncher",
-            subtitle: "The fastest fullscreen launcher for Windows.",
-            download: "Download SmartLauncher",
-            whatis: "What is SmartLauncher?",
-            whatis_desc: "SmartLauncher is a fast fullscreen launcher for Windows featuring themes, tiles, automation, fixes, a progress engine, and an advanced UI shell.",
-            features: "Features",
-            f1: "• Custom Tiles",
-            f2: "• Fullscreen Launcher UI",
-            f3: "• Modern Dark Purple Theme",
-            f4: "• Fix Engine with Progress Popup",
-            f5: "• Built-in App Scanner",
-            footer: "SmartLauncher – Created by TechWarriorSports"
-        },
-        nl: {
-            title: "SmartLauncher",
-            subtitle: "De snelste fullscreen launcher voor Windows.",
-            download: "Download SmartLauncher",
-            whatis: "Wat is SmartLauncher?",
-            whatis_desc: "SmartLauncher is een snelle fullscreen launcher voor Windows met thema’s, tegels, automatisering, fixes, progress-engine en een geavanceerde UI shell.",
-            features: "Functies",
-            f1: "• Custom Tiles",
-            f2: "• Fullscreen Launcher UI",
-            f3: "• Modern Donker Paars Thema",
-            f4: "• Fix Engine met Progress Popup",
-            f5: "• Ingebouwde App Scanner",
-            footer: "SmartLauncher – Gemaakt door TechWarriorSports"
-        }
-    };
-
-    function renderText() {
-        const lang = document.documentElement.lang;
-
-        document.getElementById("title").innerText = text[lang].title;
-        document.getElementById("subtitle").innerText = text[lang].subtitle;
-        document.getElementById("whatis").innerText = text[lang].whatis;
-        document.getElementById("whatis_desc").innerText = text[lang].whatis_desc;
-        document.getElementById("features").innerText = text[lang].features;
-        document.getElementById("f1").innerText = text[lang].f1;
-        document.getElementById("f2").innerText = text[lang].f2;
-        document.getElementById("f3").innerText = text[lang].f3;
-        document.getElementById("f4").innerText = text[lang].f4;
-        document.getElementById("f5").innerText = text[lang].f5;
-        document.getElementById("download-btn").innerText = text[lang].download;
-        document.getElementById("footer").innerText = text[lang].footer;
-    }
-
-    // Load saved theme + language
-    window.onload = () => {
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        const savedLang = localStorage.getItem("lang") || "en";
-
-        document.body.classList.add(savedTheme);
-        document.documentElement.lang = savedLang;
-
-        renderText();
-    };
-</script>
-
 </head>
 
+<body>
 
-<body class="dark">
+<div class="wrap">
+    <h1>SmartLauncher</h1>
 
-<div class="controls">
-    <button class="btn btn-theme" onclick="toggleTheme()">Theme</button>
-    <button class="btn btn-lang" onclick="toggleLang()">EN / NL</button>
+    <a class="download-btn" 
+       href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing"
+       target="_blank">
+       Download
+    </a>
+
+    <div class="desc">
+        SmartLauncher is a fast futuristic fullscreen launcher for Windows.  
+        Download it above and instantly get access to a modern purple UI, tiles, tools, shortcuts and a clean sci-fi interface that replaces the classic Windows menu.
+    </div>
 </div>
-
-<header>
-    <h1 id="title"></h1>
-    <p id="subtitle"></p>
-</header>
-
-<div class="section">
-    <h2>Download</h2>
-
-    <a id="download-btn" class="download-btn"
-        href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing"
-        target="_blank"></a>
-</div>
-
-<div class="section">
-    <h2 id="whatis"></h2>
-    <p id="whatis_desc"></p>
-</div>
-
-<div class="section">
-    <h2 id="features"></h2>
-
-    <p id="f1"></p>
-    <p id="f2"></p>
-    <p id="f3"></p>
-    <p id="f4"></p>
-    <p id="f5"></p>
-</div>
-
-<footer id="footer"></footer>
 
 </body>
 </html>
