@@ -4,6 +4,7 @@ SmartLauncher is a fullscreen Windows launcher designed to replace slow menu nav
 It gives instant access to apps, folders, settings and workflows — all from one clean interface.
 
 ---
+<img width="1920" height="1080" alt="Schermopname (1148)" src="https://github.com/user-attachments/assets/6652daa2-0baa-492b-840e-b3fbdf3ee1ae" />
 
 ## 🚀 What is SmartLauncher?
 
