@@ -1,268 +1,499 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartLauncher — Fast. Clean. Powerful.</title>
+<title>SmartLauncher — Custom Windows Start Menu</title>
 
 <style>
-/* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 
-/* THEME */
 :root{
-    --bg:#0b0b11;
-    --bg2:#12121a;
-    --panel:#181820;
-    --panel2:#1f1f2a;
-    --accent:#9D5CFF;
-    --accent2:#00D5FF;
-    --text:#ffffff;
-    --text2:#cfcfe8;
-    --radius:14px;
+    --bg:#0a0a0f;
+    --panel:#16161e;
+    --accent:#a855f7;
+    --blue:#06b6d4;
+    --text:#fff;
+    --text2:#b4b4c8;
+    --radius:12px;
 }
 
-/* GLOBAL */
 body{
-    font-family:"Segoe UI",sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     background:var(--bg);
     color:var(--text);
-    overflow-x:hidden;
+    line-height:1.6;
+    overflow-x: hidden; /* Voorkomt scrollbalk door sterren */
 }
 
-/* ANIMATIONS */
-@keyframes fadeUp{
-    0%{opacity:0;transform:translateY(40px)}
-    100%{opacity:1;transform:translateY(0)}
+/* STAR BACKGROUND */
+#star-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
 }
-.fade{animation:fadeUp 1.1s ease forwards}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 0 4px rgba(255,255,255,0.8);
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* LANGUAGE SWITCHER */
+.lang-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 100;
+    transition: 0.3s;
+}
+.lang-btn:hover {
+    background: var(--accent);
+}
+
+/* LANGUAGE VISIBILITY LOGIC */
+/* Standaard is NL zichtbaar, EN verborgen */
+[lang="en"] { display: none; }
+[lang="nl"] { display: block; }
+
+/* Als body class 'english-mode' heeft, draaien we het om */
+body.english-mode [lang="nl"] { display: none !important; }
+body.english-mode [lang="en"] { display: block !important; }
+body.english-mode span[lang="en"] { display: inline !important; }
+
 
 /* HERO */
 .hero{
-    min-height:100vh;
-    padding:120px 20px 80px;
+    padding:80px 20px 60px;
     text-align:center;
-    background:radial-gradient(circle at 50% 20%,rgba(157,92,255,0.12),transparent 70%);
+    max-width:800px;
+    margin:0 auto;
+    position: relative;
 }
-.hero-logo{
-    font-size:110px;
-    margin-bottom:10px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:float 4s ease-in-out infinite;
-}
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-18px)}
+.logo{
+    font-size:70px;
+    margin-bottom:20px;
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
 }
 .hero h1{
-    font-size:62px;
-    font-weight:900;
-    margin-bottom:10px;
-    letter-spacing:-1px;
-}
-.hero p{
-    font-size:22px;
-    color:var(--text2);
-    max-width:600px;
-    margin:0 auto 40px;
-}
-
-/* BUTTON */
-.btn{
-    display:inline-block;
-    padding:16px 48px;
-    font-size:22px;
-    font-weight:600;
-    border-radius:var(--radius);
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    text-decoration:none;
-    color:#fff;
-    transition:0.25s;
-}
-.btn:hover{
-    transform:translateY(-4px) scale(1.03);
-    filter:brightness(1.15);
-}
-
-/* FEATURES */
-.features{
-    max-width:1100px;
-    margin:80px auto;
-    padding:0 20px;
-    display:grid;
-    gap:30px;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-}
-.feature{
-    background:var(--panel);
-    border-radius:var(--radius);
-    padding:32px;
-    border:1px solid #22222c;
-    text-align:center;
-    transition:0.25s;
-}
-.feature:hover{
-    transform:translateY(-6px);
-    background:var(--panel2);
-}
-.icon{
-    font-size:44px;
-    margin-bottom:14px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    -webkit-background-clip:text;
-    color:transparent;
-}
-.feature h3{
-    font-size:21px;
-    margin-bottom:8px;
-}
-.feature p{
-    font-size:16px;
-    color:var(--text2);
-}
-
-/* STEPS */
-.steps{
-    max-width:900px;
-    margin:90px auto;
-    padding:0 20px;
-    display:flex;
-    gap:22px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-.step{
-    width:240px;
-    background:var(--panel);
-    padding:28px;
-    text-align:center;
-    border-radius:var(--radius);
-    border:1px solid #272732;
-    transition:0.25s;
-}
-.step:hover{
-    transform:translateY(-6px);
-}
-.step-num{
-    font-size:36px;
-    font-weight:700;
-    margin-bottom:8px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    -webkit-background-clip:text;
-    color:transparent;
-}
-
-/* FINAL DOWNLOAD */
-.final{
-    padding:120px 20px;
-    background:linear-gradient(180deg,rgba(157,92,255,0.08),transparent 50%);
-    text-align:center;
-}
-.final h2{
-    font-size:44px;
+    font-size:48px;
+    font-weight:800;
     margin-bottom:12px;
 }
-.final p{
-    font-size:20px;
+.hero .sub{
+    font-size:22px;
+    color:var(--blue);
+    margin-bottom:24px;
+}
+.hero p{
+    font-size:18px;
     color:var(--text2);
     margin-bottom:32px;
 }
 
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:25px;
-    font-size:14px;
-    color:#888;
+.btn{
+    display:inline-block;
+    padding:16px 40px;
+    font-size:18px;
+    font-weight:600;
+    border-radius:var(--radius);
+    background:var(--accent);
+    color:#fff;
+    text-decoration:none;
+    transition:0.2s;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+.btn:hover{
+    transform:scale(1.05);
+    background:#9333ea;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
 }
 
-/* MOBILE */
+/* SECTION */
+section{
+    max-width:900px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+h2{
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.problem{
+    background:var(--panel);
+    padding:32px;
+    border-radius:var(--radius);
+    border-left:4px solid #ef4444;
+}
+
+.problem ul{
+    list-style:none;
+    margin-top:16px;
+}
+
+.problem li{
+    padding:10px 0;
+    color:var(--text2);
+    font-size:17px;
+}
+
+.problem li:before{
+    content:"→ ";
+    color:#ef4444;
+    font-weight:bold;
+}
+
+/* SOLUTION */
+.solution{
+    text-align:center;
+    padding:40px 0;
+}
+
+.solution h2{
+    color:var(--blue);
+    margin-bottom:16px;
+}
+
+.solution p{
+    font-size:19px;
+    color:var(--text2);
+}
+
+/* FEATURES */
+.wat{
+    background:var(--panel);
+    padding:32px;
+    border-radius:var(--radius);
+    margin-bottom:20px;
+    transition: transform 0.2s;
+}
+.wat:hover {
+    transform: translateY(-5px);
+}
+
+.wat h3{
+    font-size:22px;
+    color:var(--accent);
+    margin-bottom:12px;
+}
+
+.wat p{
+    color:var(--text2);
+    font-size:17px;
+    margin-bottom:12px;
+}
+
+.wat ul{
+    margin-left:20px;
+    color:var(--text2);
+}
+
+.wat li{
+    margin:6px 0;
+    font-size:16px;
+}
+
+/* VOORBEELDEN */
+.vb{
+    background:#1a1a24;
+    padding:24px;
+    border-radius:var(--radius);
+    margin-bottom:16px;
+    border-left:3px solid var(--blue);
+}
+
+.vb h4{
+    font-size:18px;
+    margin-bottom:8px;
+    color:var(--blue);
+}
+
+.vb p{
+    color:var(--text2);
+    font-size:16px;
+}
+
+/* DOWNLOAD */
+.download{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.download h2{
+    margin-bottom:16px;
+}
+
+.download p{
+    font-size:18px;
+    color:var(--text2);
+    margin-bottom:32px;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#666;
+    font-size:14px;
+    border-top: 1px solid #222;
+}
+
 @media(max-width:768px){
-    .hero h1{font-size:46px;}
-    .hero p{font-size:19px;}
-    .btn{padding:14px 38px;font-size:20px;}
+    .hero h1{font-size:36px;}
+    .hero .sub{font-size:19px;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<section class="hero fade">
-    <div class="hero-logo">⚡</div>
+<!-- Background Container -->
+<div id="star-container"></div>
+
+<!-- Language Switcher -->
+<button class="lang-btn" onclick="toggleLanguage()">
+    <span lang="nl">Switch to English 🇬🇧</span>
+    <span lang="en">Wissel naar Nederlands 🇳🇱</span>
+</button>
+
+<div class="hero">
+    <div class="logo">⚡</div>
     <h1>SmartLauncher</h1>
-    <p>The fastest way to open anything on Windows — clean, instant, zero clutter.</p>
-    <a class="btn" target="_blank" 
-       href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing">
-        Download Free
-    </a>
+    
+    <p class="sub" lang="nl">Maak je eigen Windows startmenu</p>
+    <p class="sub" lang="en">Build your own Windows start menu</p>
+
+    <p lang="nl">Het Windows startmenu is bagger. Te veel gezeur, te langzaam, alles staat verstopt. Dus ik heb mijn eigen gemaakt.</p>
+    <p lang="en">The Windows start menu sucks. Too much clutter, too slow, everything is hidden. So I built my own.</p>
+    
+    <a class="btn" href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing" target="_blank">Download</a>
+</div>
+
+<section class="problem">
+    <h2 lang="nl">Het probleem</h2>
+    <h2 lang="en">The Problem</h2>
+
+    <p lang="nl">Windows is irritant:</p>
+    <p lang="en">Windows is annoying:</p>
+    <ul>
+        <li>
+            <span lang="nl">Je moet scrollen door het startmenu om apps te vinden</span>
+            <span lang="en">You have to scroll endlessly to find your apps</span>
+        </li>
+        <li>
+            <span lang="nl">Mappen openen = 5 keer klikken in Verkenner</span>
+            <span lang="en">Opening folders = clicking 5 times in Explorer</span>
+        </li>
+        <li>
+            <span lang="nl">Instellingen zitten overal verstopt</span>
+            <span lang="en">Settings are hidden everywhere</span>
+        </li>
+        <li>
+            <span lang="nl">Als je een app opent, moet je weer opnieuw zoeken</span>
+            <span lang="en">Open an app, and you have to search all over again</span>
+        </li>
+    </ul>
 </section>
 
-<!-- FEATURES -->
-<section class="features fade">
-    <div class="feature">
-        <div class="icon">🚀</div>
-        <h3>Instant Launch</h3>
-        <p>Apps, folders, tools — everything opens immediately.</p>
+<section class="solution">
+    <h2 lang="nl">De fix</h2>
+    <h2 lang="en">The Fix</h2>
+
+    <p lang="nl">Maak slimme tegels die alles doen wat jij wilt. Klik → klaar. Geen gedoe.</p>
+    <p lang="en">Create smart tiles that do exactly what you want. Click → done. No hassle.</p>
+</section>
+
+<section>
+    <h2 lang="nl">Wat kun je ermee?</h2>
+    <h2 lang="en">What can it do?</h2>
+    
+    <div class="wat">
+        <h3 lang="nl">Apps direct starten</h3>
+        <h3 lang="en">Launch apps instantly</h3>
+        <p lang="nl">Maak een tegel voor Chrome, VS Code, Spotify — whatever. Eén klik en het start.</p>
+        <p lang="en">Create a tile for Chrome, VS Code, Spotify — whatever. One click and it starts.</p>
     </div>
-    <div class="feature">
-        <div class="icon">🧩</div>
-        <h3>Custom Tiles</h3>
-        <p>Create workflows that launch multiple actions at once.</p>
+
+    <div class="wat">
+        <h3 lang="nl">Mappen openen</h3>
+        <h3 lang="en">Open Folders</h3>
+        <p lang="nl">Tegel voor je projectmap, downloads, screenshots. Geen Verkenner meer nodig.</p>
+        <p lang="en">Tile for your project folder, downloads, screenshots. No more File Explorer needed.</p>
     </div>
-    <div class="feature">
-        <div class="icon">🔎</div>
-        <h3>Ultra Search</h3>
-        <p>Type anything, get results in real time.</p>
+
+    <div class="wat">
+        <h3 lang="nl">Websites openen</h3>
+        <h3 lang="en">Open Websites</h3>
+        <p lang="nl">Gmail, YouTube, GitHub — gewoon in een tegel. Sneller dan bladwijzers.</p>
+        <p lang="en">Gmail, YouTube, GitHub — just in a tile. Faster than bookmarks.</p>
     </div>
-    <div class="feature">
-        <div class="icon">🎨</div>
-        <h3>Themes</h3>
-        <p>Dark, light, or your own full custom UI style.</p>
+
+    <div class="wat">
+        <h3 lang="nl">Windows instellingen</h3>
+        <h3 lang="en">Windows Settings</h3>
+        <p lang="nl">Geen gezeur met het Configuratiescherm. Maak een tegel voor je scherm, netwerk, whatever.</p>
+        <p lang="en">No messing around with the Control Panel. Create a tile for display, network, whatever.</p>
     </div>
-    <div class="feature">
-        <div class="icon">🎛️</div>
-        <h3>Smart Overlay</h3>
-        <p>Instant return button after launching an app.</p>
+
+    <div class="wat">
+        <h3 lang="nl">Workflows</h3>
+        <h3 lang="en">Workflows</h3>
+        <p lang="nl">Eén tegel kan meerdere dingen achter elkaar doen:</p>
+        <p lang="en">One tile can do multiple things in sequence:</p>
+        <ul>
+            <li>
+                <span lang="nl">Open Chrome → wacht 2 sec → start Outlook</span>
+                <span lang="en">Open Chrome → wait 2 sec → start Outlook</span>
+            </li>
+            <li>
+                <span lang="nl">Open je projectmap → start VS Code</span>
+                <span lang="en">Open project folder → start VS Code</span>
+            </li>
+            <li>
+                <span lang="nl">Start je game → open Discord</span>
+                <span lang="en">Start your game → open Discord</span>
+            </li>
+        </ul>
+        <p style="margin-top:12px;" lang="nl">Je maakt dit via een wizard, geen code nodig.</p>
+        <p style="margin-top:12px;" lang="en">You create this via a wizard, no coding required.</p>
     </div>
-    <div class="feature">
-        <div class="icon">🌐</div>
-        <h3>Multilanguage</h3>
-        <p>English, Dutch & German built-in.</p>
+
+    <div class="wat">
+        <h3 lang="nl">Return knop</h3>
+        <h3 lang="en">Return Button</h3>
+        <p lang="nl">Als je een app start, verschijnt er een kleine knop op je scherm. Druk erop en SmartLauncher komt terug. Geen Alt+Tab gedoe meer.</p>
+        <p lang="en">When you start an app, a small button appears on screen. Click it and SmartLauncher returns. No more Alt+Tab.</p>
+    </div>
+
+    <div class="wat">
+        <h3 lang="nl">Zoeken</h3>
+        <h3 lang="en">Search</h3>
+        <p lang="nl">Type in de zoekbalk en vind direct je tegels. Real-time, geen categorieën.</p>
+        <p lang="en">Type in the search bar and find your tiles instantly. Real-time, no categories.</p>
+    </div>
+
+    <div class="wat">
+        <h3 lang="nl">Personaliseren</h3>
+        <h3 lang="en">Personalize</h3>
+        <p lang="nl">Kies je eigen kleuren, dark/light mode. Maak het zoals jij het wilt.</p>
+        <p lang="en">Choose your own colors, dark/light mode. Make it yours.</p>
     </div>
 </section>
 
-<!-- STEPS -->
-<section class="steps fade">
-    <div class="step">
-        <div class="step-num">1</div>
-        <p>Download SmartLauncher</p>
+<section>
+    <h2 lang="nl">Voorbeelden</h2>
+    <h2 lang="en">Examples</h2>
+    
+    <div class="vb">
+        <h4 lang="nl">Developer workflow</h4>
+        <h4 lang="en">Developer workflow</h4>
+        <p lang="nl">Tegel "Start project": open VS Code → open terminal → start Chrome met localhost</p>
+        <p lang="en">Tile "Start Project": open VS Code → open terminal → start Chrome with localhost</p>
     </div>
-    <div class="step">
-        <div class="step-num">2</div>
-        <p>Launch the app</p>
+
+    <div class="vb">
+        <h4 lang="nl">Gaming setup</h4>
+        <h4 lang="en">Gaming setup</h4>
+        <p lang="nl">Tegel "Game tijd": start Steam → open Discord → open je game</p>
+        <p lang="en">Tile "Game Time": start Steam → open Discord → open your game</p>
     </div>
-    <div class="step">
-        <div class="step-num">3</div>
-        <p>Create tiles & go</p>
+
+    <div class="vb">
+        <h4 lang="nl">School/werk</h4>
+        <h4 lang="en">School/Work</h4>
+        <p lang="nl">Tegel "Ochtend": open Outlook → start Teams → open je projectmap</p>
+        <p lang="en">Tile "Morning": open Outlook → start Teams → open project folder</p>
+    </div>
+
+    <div class="vb">
+        <h4 lang="nl">Snelle fixes</h4>
+        <h4 lang="en">Quick fixes</h4>
+        <p lang="nl">Maak tegels voor PowerShell scripts die je vaak uitvoert, zonder command line te hoeven typen.</p>
+        <p lang="en">Create tiles for PowerShell scripts you run often, without typing in the command line.</p>
     </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="final fade">
-    <h2>Ready to Launch Faster?</h2>
-    <p>No setup. No bloat. Just pure speed.</p>
-    <a class="btn" target="_blank"
-       href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing">
-        Download SmartLauncher
-    </a>
+<section class="download">
+    <h2 lang="nl">Download het</h2>
+    <h2 lang="en">Download it</h2>
+    <p lang="nl">Gratis. Geen installatie gedoe. Gewoon downloaden en gebruiken.</p>
+    <p lang="en">Free. No installation hassle. Just download and use.</p>
+    <a class="btn" href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing" target="_blank">Download SmartLauncher</a>
 </section>
 
 <footer>
-    SmartLauncher • Created by TechWarriorSports
+    SmartLauncher — <span lang="nl">Gemaakt door</span><span lang="en">Made by</span> TechWarriorSports
 </footer>
+
+<script>
+    // STAR RAIN EFFECT
+    function createStars() {
+        const container = document.getElementById('star-container');
+        const starCount = 60; // Aantal sterren
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Random properties
+            const x = Math.random() * 100; // Positie links (0-100%)
+            const size = Math.random() * 3 + 1; // Grootte (1-4px)
+            const duration = Math.random() * 3 + 2; // Snelheid (2-5s)
+            const delay = Math.random() * 5; // Vertraging
+
+            star.style.left = x + '%';
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.animationName = 'fall';
+            star.style.animationDuration = duration + 's';
+            star.style.animationDelay = '-' + delay + 's'; // Negatieve delay zorgt dat ze al halverwege zijn
+            star.style.animationTimingFunction = 'linear';
+            star.style.animationIterationCount = 'infinite';
+
+            container.appendChild(star);
+        }
+    }
+
+    // LANGUAGE SWITCHER LOGIC
+    function toggleLanguage() {
+        document.body.classList.toggle('english-mode');
+    }
+
+    // Init
+    createStars();
+</script>
 
 </body>
 </html>
