@@ -3,193 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartLauncher – The Fastest Windows Launcher</title>
+<title>SmartLauncher — Fast. Clean. Powerful.</title>
 
 <style>
 /* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
 
 /* THEME */
-:root {
-    --bg: #0d0d12;
-    --panel: #16161d;
-    --soft: #1f1f29;
-    --accent: #9370DB;
-    --accent-light: #bba1f7;
-    --text: #ffffff;
-    --text-soft: #bfbfbf;
+:root{
+    --bg:#0b0b11;
+    --bg2:#12121a;
+    --panel:#181820;
+    --panel2:#1f1f2a;
+    --accent:#9D5CFF;
+    --accent2:#00D5FF;
+    --text:#ffffff;
+    --text2:#cfcfe8;
+    --radius:14px;
 }
 
 /* GLOBAL */
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
+body{
+    font-family:"Segoe UI",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
 }
 
-/* SMOOTH FADE ANIMATION */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fade 1s ease forwards;
+/* ANIMATIONS */
+@keyframes fadeUp{
+    0%{opacity:0;transform:translateY(40px)}
+    100%{opacity:1;transform:translateY(0)}
 }
-@keyframes fade {
-    to { opacity: 1; transform: translateY(0); }
-}
+.fade{animation:fadeUp 1.1s ease forwards}
 
 /* HERO */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 60px 20px;
-    animation: fade 1.2s ease forwards;
+.hero{
+    min-height:100vh;
+    padding:120px 20px 80px;
+    text-align:center;
+    background:radial-gradient(circle at 50% 20%,rgba(157,92,255,0.12),transparent 70%);
 }
-
-.logo {
-    font-size: 120px;
-    margin-bottom: 15px;
-    animation: float 4s ease-in-out infinite;
+.hero-logo{
+    font-size:110px;
+    margin-bottom:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:float 4s ease-in-out infinite;
 }
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-14px); }
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-18px)}
 }
-
-h1 {
-    font-size: 64px;
-    font-weight: 900;
-    margin-bottom: 10px;
+.hero h1{
+    font-size:62px;
+    font-weight:900;
+    margin-bottom:10px;
+    letter-spacing:-1px;
 }
-
-.tagline {
-    font-size: 24px;
-    color: var(--text-soft);
-    max-width: 550px;
-    margin: 0 auto 35px;
+.hero p{
+    font-size:22px;
+    color:var(--text2);
+    max-width:600px;
+    margin:0 auto 40px;
 }
 
 /* BUTTON */
-.cta {
-    display: inline-block;
-    padding: 16px 50px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fff;
-    background: var(--accent);
-    border-radius: 10px;
-    text-decoration: none;
-    transition: 0.25s;
+.btn{
+    display:inline-block;
+    padding:16px 48px;
+    font-size:22px;
+    font-weight:600;
+    border-radius:var(--radius);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    text-decoration:none;
+    color:#fff;
+    transition:0.25s;
 }
-.cta:hover {
-    background: var(--accent-light);
-    transform: translateY(-4px);
+.btn:hover{
+    transform:translateY(-4px) scale(1.03);
+    filter:brightness(1.15);
 }
 
 /* FEATURES */
-.features {
-    max-width: 900px;
-    margin: 80px auto;
-    display: grid;
-    gap: 25px;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    padding: 0 20px;
+.features{
+    max-width:1100px;
+    margin:80px auto;
+    padding:0 20px;
+    display:grid;
+    gap:30px;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.feature{
+    background:var(--panel);
+    border-radius:var(--radius);
+    padding:32px;
+    border:1px solid #22222c;
+    text-align:center;
+    transition:0.25s;
+}
+.feature:hover{
+    transform:translateY(-6px);
+    background:var(--panel2);
+}
+.icon{
+    font-size:44px;
+    margin-bottom:14px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;
+    color:transparent;
+}
+.feature h3{
+    font-size:21px;
+    margin-bottom:8px;
+}
+.feature p{
+    font-size:16px;
+    color:var(--text2);
 }
 
-.feature {
-    background: var(--panel);
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #24242f;
-    transition: 0.25s;
+/* STEPS */
+.steps{
+    max-width:900px;
+    margin:90px auto;
+    padding:0 20px;
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
-.feature:hover {
-    transform: translateY(-6px);
-    background: var(--soft);
+.step{
+    width:240px;
+    background:var(--panel);
+    padding:28px;
+    text-align:center;
+    border-radius:var(--radius);
+    border:1px solid #272732;
+    transition:0.25s;
 }
-
-.feature-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
+.step:hover{
+    transform:translateY(-6px);
 }
-
-.feature h3 {
-    font-size: 20px;
-    margin-bottom: 8px;
-    color: var(--accent-light);
-}
-
-.feature p {
-    font-size: 16px;
-    color: var(--text-soft);
-}
-
-/* SHORT HOW-IT-WORKS */
-.steps {
-    max-width: 760px;
-    margin: 80px auto;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0 20px;
-}
-
-.step {
-    background: var(--panel);
-    padding: 28px;
-    width: 240px;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #24242f;
-    transition: 0.25s;
-}
-.step:hover {
-    transform: translateY(-6px);
-    background: var(--soft);
-}
-
-.step-number {
-    font-size: 38px;
-    color: var(--accent);
-    margin-bottom: 10px;
+.step-num{
+    font-size:36px;
+    font-weight:700;
+    margin-bottom:8px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;
+    color:transparent;
 }
 
 /* FINAL DOWNLOAD */
-.download {
-    text-align: center;
-    padding: 110px 20px;
-    background: var(--soft);
+.final{
+    padding:120px 20px;
+    background:linear-gradient(180deg,rgba(157,92,255,0.08),transparent 50%);
+    text-align:center;
 }
-
-.download h2 {
-    font-size: 42px;
-    margin-bottom: 15px;
+.final h2{
+    font-size:44px;
+    margin-bottom:12px;
 }
-
-.download p {
-    font-size: 20px;
-    color: var(--text-soft);
-    margin-bottom: 32px;
+.final p{
+    font-size:20px;
+    color:var(--text2);
+    margin-bottom:32px;
 }
 
 /* FOOTER */
-footer {
-    text-align: center;
-    padding: 25px;
-    font-size: 14px;
-    color: var(--text-soft);
+footer{
+    text-align:center;
+    padding:25px;
+    font-size:14px;
+    color:#888;
 }
 
 /* MOBILE */
-@media (max-width: 768px) {
-    h1 { font-size: 46px; }
-    .tagline { font-size: 20px; }
-    .cta { font-size: 20px; padding: 16px 40px; }
+@media(max-width:768px){
+    .hero h1{font-size:46px;}
+    .hero p{font-size:19px;}
+    .btn{padding:14px 38px;font-size:20px;}
 }
 </style>
 </head>
@@ -197,65 +190,75 @@ footer {
 <body>
 
 <!-- HERO -->
-<div class="hero fade-in">
-    <div class="logo">🚀</div>
+<section class="hero fade">
+    <div class="hero-logo">⚡</div>
     <h1>SmartLauncher</h1>
-    <p class="tagline">The fastest way to open anything on Windows.</p>
-    <a class="cta" target="_blank"
+    <p>The fastest way to open anything on Windows — clean, instant, zero clutter.</p>
+    <a class="btn" target="_blank" 
        href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing">
         Download Free
     </a>
-</div>
+</section>
 
 <!-- FEATURES -->
-<div class="features fade-in">
+<section class="features fade">
     <div class="feature">
-        <div class="feature-icon">⚡</div>
+        <div class="icon">🚀</div>
         <h3>Instant Launch</h3>
-        <p>Apps. Folders. Web. Anything.</p>
+        <p>Apps, folders, tools — everything opens immediately.</p>
     </div>
     <div class="feature">
-        <div class="feature-icon">🎯</div>
+        <div class="icon">🧩</div>
         <h3>Custom Tiles</h3>
-        <p>Build your own workflows.</p>
+        <p>Create workflows that launch multiple actions at once.</p>
     </div>
     <div class="feature">
-        <div class="feature-icon">🔍</div>
-        <h3>Fast Search</h3>
-        <p>Type and go. Zero delay.</p>
+        <div class="icon">🔎</div>
+        <h3>Ultra Search</h3>
+        <p>Type anything, get results in real time.</p>
     </div>
     <div class="feature">
-        <div class="feature-icon">🎨</div>
+        <div class="icon">🎨</div>
         <h3>Themes</h3>
-        <p>Make it yours completely.</p>
+        <p>Dark, light, or your own full custom UI style.</p>
     </div>
-</div>
+    <div class="feature">
+        <div class="icon">🎛️</div>
+        <h3>Smart Overlay</h3>
+        <p>Instant return button after launching an app.</p>
+    </div>
+    <div class="feature">
+        <div class="icon">🌐</div>
+        <h3>Multilanguage</h3>
+        <p>English, Dutch & German built-in.</p>
+    </div>
+</section>
 
 <!-- STEPS -->
-<div class="steps fade-in">
+<section class="steps fade">
     <div class="step">
-        <div class="step-number">1</div>
+        <div class="step-num">1</div>
         <p>Download SmartLauncher</p>
     </div>
     <div class="step">
-        <div class="step-number">2</div>
-        <p>Open the launcher</p>
+        <div class="step-num">2</div>
+        <p>Launch the app</p>
     </div>
     <div class="step">
-        <div class="step-number">3</div>
-        <p>Create your tiles</p>
+        <div class="step-num">3</div>
+        <p>Create tiles & go</p>
     </div>
-</div>
+</section>
 
 <!-- FINAL CTA -->
-<div class="download fade-in">
-    <h2>Start Faster Today</h2>
-    <p>No setup. No clutter. Just speed.</p>
-    <a class="cta" target="_blank"
+<section class="final fade">
+    <h2>Ready to Launch Faster?</h2>
+    <p>No setup. No bloat. Just pure speed.</p>
+    <a class="btn" target="_blank"
        href="https://drive.google.com/file/d/1rmC_SMzMzNgD-c-gw9DzeKU4NY5CCie7/view?usp=sharing">
         Download SmartLauncher
     </a>
-</div>
+</section>
 
 <footer>
     SmartLauncher • Created by TechWarriorSports
